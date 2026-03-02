@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta property="vk:app_id" content="12345678"> <!-- замените на ID вашего приложения -->
+  <title>Натальная карта ✦ предсказание</title>
+  <style>
+    /* Стили — компактные, тёмные, магические */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(ellipse at top, #0b0d2e, #030514);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+      padding: 8px;
+      color: #e0e5f0;
+    }
+
+    .container {
+      max-width: 400px;
+      width: 100%;
+      border-radius: 36px 36px 24px 24px;
+      background: rgba(8, 12, 25, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 25px 45px rgba(0,0,0,0.8), 0 0 0 2px #4a3f6e inset, 0 0 15px #7e6c9c;
+      padding: 16px 12px 20px;
+      border: 1px solid #a48ec0;
+      margin: 8px 0;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 300;
+      font-size: 1.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px #b6a2dc, 0 0 20px #5f4b8b;
+      color: #f3eaff;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+      opacity: 0.8;
+      font-style: italic;
+      color: #cfc1f0;
+      border-bottom: 1px dashed #6a5a8a;
+      padding-bottom: 8px;
+    }
+
+    /* Компактная форма */
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+      justify-content: center;
+    }
+
+    .input-group {
+      flex: 1 1 120px;
+      min-width: 120px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #cbb7fa;
+      margin-bottom: 2px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 8px;
+      background: #1e1a36;
+      border: 1px solid #6d5a9c;
+      border-radius: 24px;
+      color: #f0e6ff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus {
+      border-color: #c7a8ff;
+      box-shadow: 0 0 12px #a07dd0;
+    }
+
+    .btn {
+      background: linear-gradient(145deg, #4a3b7c, #2a1f4a);
+      border: 1px solid #c9adff;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      box-shadow: 0 5px 0 #120e24, 0 8px 16px black;
+      transition: 0.1s ease;
+      cursor: pointer;
+      width: 100%;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    .btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 2px 0 #120e24, 0 5px 12px black;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      transform: none;
+      pointer-events: none;
+    }
+
+    /* SVG-карта — уменьшенный размер */
+    .chart-container {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 10px auto;
+      filter: drop-shadow(0 0 15px #705ea7);
+      border-radius: 50%;
+      background: #03061a;
+      box-shadow: 0 0 30px #2f2660 inset, 0 10px 20px black;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Блок отчёта */
+    .report-section {
+      margin-top: 12px;
+      background: rgba(16, 12, 30, 0.7);
+      border-radius: 28px;
+      padding: 14px 12px;
+      border: 1px solid #7a68b0;
+    }
+
+    .report-title {
+      font-size: 1.2rem;
+      text-align: center;
+      color: #ffecbf;
+      text-shadow: 0 0 8px #e2b45c;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .report-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .report-item {
+      background: #0b0820;
+      padding: 12px 14px;
+      border-radius: 24px;
+      border-left: 5px solid #b492e0;
+      font-style: italic;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 10px black;
+      color: #ded3ff;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #c7b5ff;
+      font-size: 1.1rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    .zodiac-sign {
+      font-size: 11px;
+      fill: #bbaae6;
+      pointer-events: none;
+    }
+
+    .star {
+      fill: white;
+      opacity: 0.5;
+      animation: twinkle 3s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+
+    .planet-glow {
+      animation: glowPulse 3s infinite ease-in-out;
+    }
+
+    @keyframes glowPulse {
+      0% { filter: drop-shadow(0 0 2px #fdeaa8); }
+      50% { filter: drop-shadow(0 0 8px #fbf3d5) drop-shadow(0 0 4px #dbb05c); }
+      100% { filter: drop-shadow(0 0 2px #fdeaa8); }
+    }
+
+    .hint {
+      font-size: 0.65rem;
+      text-align: center;
+      margin-top: 8px;
+      color: #988fc0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>✦ КАРТА ✦</h1>
+  <div class="subtitle">введи дату и время рождения</div>
+
+  <!-- Форма ввода -->
+  <div class="form-row">
+    <div class="input-group">
+      <label>📅 дата</label>
+      <input type="date" id="birthDate" value="1990-01-01">
+    </div>
+    <div class="input-group">
+      <label>⏰ время</label>
+      <input type="time" id="birthTime" value="12:00">
+    </div>
+  </div>
+
+  <!-- Кнопка расчёта -->
+  <button class="btn" id="calculateBtn">✨ рассчитать карту ✨</button>
+
+  <!-- Небольшая визуализация натальной карты -->
+  <div class="chart-container">
+    <svg viewBox="0 0 200 200" id="chart-svg">
+      <defs>
+        <radialGradient id="planetGrad">
+          <stop offset="0%" stop-color="#f7d875"/>
+          <stop offset="80%" stop-color="#b4864b"/>
+        </radialGradient>
+      </defs>
+      <g id="stars-bg"></g>
+      <g id="zodiac-sectors"></g>
+      <g id="aspect-lines"></g>
+      <g id="planets"></g>
+      <circle cx="100" cy="100" r="92" fill="none" stroke="#6a579a" stroke-width="0.8" stroke-dasharray="2 3" opacity="0.5"/>
+      <circle cx="100" cy="100" r="70" fill="none" stroke="#4f3f79" stroke-width="0.6" stroke-dasharray="1 4"/>
+    </svg>
+  </div>
+
+  <!-- Блок отчёта -->
+  <div class="report-section">
+    <div class="report-title">🌙 свиток судьбы</div>
+    <div id="reportContainer" class="report-content">
+      <div class="report-item">✨ Заполни форму и нажми «рассчитать»</div>
+    </div>
+  </div>
+  <div class="hint">⚲ 15 тайных посланий — одно для тебя</div>
+</div>
+
+<script src="https://unpkg.com/@vkontakte/vk-bridge@2.1.4/dist/browser.min.js"></script>
+<script>
+  (function() {
+    // VK Bridge инициализация
+    if (window.vkBridge) {
+      vkBridge.send('VKWebAppInit', {});
+    }
+
+    // ---------- Данные для визуализации (зодиак, планеты) ----------
+    const zodiacs = [
+      { symbol: '♈', name: 'овен' },   // 0
+      { symbol: '♉', name: 'телец' },   // 1
+      { symbol: '♊', name: 'близнецы' },// 2
+      { symbol: '♋', name: 'рак' },     // 3
+      { symbol: '♌', name: 'лев' },     // 4
+      { symbol: '♍', name: 'дева' },    // 5
+      { symbol: '♎', name: 'весы' },    // 6
+      { symbol: '♏', name: 'скорпион' },// 7
+      { symbol: '♐', name: 'стрелец' }, // 8
+      { symbol: '♑', name: 'козерог' }, // 9
+      { symbol: '♒', name: 'водолей' }, // 10
+      { symbol: '♓', name: 'рыбы' }     // 11
+    ];
+
+    // Планеты (координаты для маленького круга 200x200)
+    const planets = [
+      { symbol: '☉', coords: [120, 50] },  // Солнце
+      { symbol: '☽', coords: [70, 45] },   // Луна
+      { symbol: '☿', coords: [125, 115] }, // Меркурий
+      { symbol: '♀', coords: [80, 140] },  // Венера
+      { symbol: '♂', coords: [145, 95] },  // Марс
+      { symbol: '♃', coords: [50, 110] },  // Юпитер
+      { symbol: '♄', coords: [90, 160] }   // Сатурн
+    ];
+
+    // 15 универсальных мистических ответов (с возможностью подстановки знака)
+    const universalAnswers = [
+      "Твой знак — %s. В этом месяце звёзды советуют тебе прислушаться к шёпоту предков: они укажут путь.",
+      "Скоро в твою жизнь войдёт человек, чьё имя начинается с буквы, спрятанной в твоей дате рождения.",
+      "Не бойся перемен — за ближайшим поворотом тебя ждёт неожиданный дар судьбы.",
+      "Тайна, которую ты хранишь, скоро перестанет тяготить тебя. Пришло время освобождения.",
+      "Вода и огонь поспорят за твою душу на этой неделе. Сохрани равновесие — и обретёшь силу.",
+      "Старый друг напомнит о себе при лунном свете. Не отвергай помощь из прошлого.",
+      "Твоя карьера сделает крутой вираж. Доверься интуиции, она острее разума.",
+      "В ближайшие дни избегай спешки. Судьба любит тех, кто умеет ждать у моря погоды.",
+      "Здоровье потребует внимания: звёзды рекомендуют прогулки у воды и травяной чай.",
+      "Финансовый поток изменит русло. Следи за знаками — они приведут к источнику.",
+      "В любви возможен неожиданный поворот. Кто-то из окружения давно смотрит на тебя иначе.",
+      "Творческий подъём накроет волной. Лови вдохновение, не упусти искру.",
+      "Поездка, которая казалась невозможной, скоро станет реальностью. Готовь чемодан.",
+      "Ссора с близким обернётся примирением, которое укрепит связь на годы.",
+      "Твоя интуиция сейчас сильна как никогда. Первый же импульс приведёт к цели."
+    ];
+
+    // Функция определения знака зодиака по дате (день, месяц)
+    function getZodiacSign(day, month) {
+      if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return 0; // овен
+      if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return 1; // телец
+      if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return 2; // близнецы
+      if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return 3; // рак
+      if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return 4; // лев
+      if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return 5; // дева
+      if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return 6; // весы
+      if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return 7; // скорпион
+      if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return 8; // стрелец
+      if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return 9; // козерог
+      if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return 10; // водолей
+      return 11; // рыбы (19 фев - 20 мар)
+    }
+
+    // Генерация отчёта на основе даты и времени
+    function generateReport(dateStr, timeStr) {
+      if (!dateStr) dateStr = '1990-01-01';
+      if (!timeStr) timeStr = '12:00';
+      
+      const [year, month, day] = dateStr.split('-').map(Number);
+      const [hour, minute] = timeStr.split(':').map(Number);
+      
+      // Определяем знак зодиака
+      const zodiacIndex = getZodiacSign(day, month);
+      const zodiacName = zodiacs[zodiacIndex].name;
+      const zodiacSymbol = zodiacs[zodiacIndex].symbol;
+
+      // Вычисляем уникальное число для выбора ответов (простая сумма)
+      const seed = (year * 12 + month * 31 + day * 24 + hour * 60 + minute) % 15;
+      
+      // Выбираем 3 уникальных ответа (используем seed и смещения)
+      const indices = [];
+      for (let i = 0; i < 3; i++) {
+        let idx = (seed + i * 7) % 15;
+        indices.push(idx);
+      }
+      
+      // Формируем ответы, подставляя знак зодиака (где есть %s)
+      const selectedAnswers = indices.map(idx => {
+        let answer = universalAnswers[idx];
+        // Заменяем %s на знак зодиака с символом
+        if (answer.includes('%s')) {
+          answer = answer.replace('%s', `${zodiacSymbol} ${zodiacName}`);
+        } else {
+          // Если нет подстановки, добавляем знак в конец для единства
+          answer = answer + ` (${zodiacSymbol} ${zodiacName})`;
+        }
+        return answer;
+      });
+
+      return {
+        zodiac: { index: zodiacIndex, name: zodiacName, symbol: zodiacSymbol },
+        answers: selectedAnswers
+      };
+    }
+
+    // ---------- Рисование SVG ----------
+    function drawChart() {
+      const starsGroup = document.getElementById('stars-bg');
+      for (let i = 0; i < 25; i++) {
+        const cx = Math.random() * 200;
+        const cy = Math.random() * 200;
+        const r = Math.random() * 1.8 + 0.5;
+        const star = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        star.setAttribute('cx', cx);
+        star.setAttribute('cy', cy);
+        star.setAttribute('r', r);
+        star.setAttribute('class', 'star');
+        star.style.animationDelay = (i * 0.2) % 3 + 's';
+        starsGroup.appendChild(star);
+      }
+
+      // сектора зодиака (12 шт, центр 100,100 радиус 90)
+      const sectorsGroup = document.getElementById('zodiac-sectors');
+      const centerX = 100, centerY = 100, radius = 90;
+      for (let i = 0; i < 12; i++) {
+        const startAngle = (i * 30 - 90) * Math.PI / 180;
+        const endAngle = ((i + 1) * 30 - 90) * Math.PI / 180;
+        const x1 = centerX + radius * Math.cos(startAngle);
+        const y1 = centerY + radius * Math.sin(startAngle);
+        const x2 = centerX + radius * Math.cos(endAngle);
+        const y2 = centerY + radius * Math.sin(endAngle);
+        const d = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', d);
+        const hue = (i * 30 + 180) % 360;
+        path.setAttribute('fill', `hsla(${hue}, 50%, 25%, 0.25)`);
+        path.setAttribute('data-zodiac', i);
+        sectorsGroup.appendChild(path);
+
+        // подпись знака
+        const midAngle = (startAngle + endAngle) / 2;
+        const labelRadius = radius - 14;
+        const tx = centerX + labelRadius * Math.cos(midAngle);
+        const ty = centerY + labelRadius * Math.sin(midAngle);
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', tx);
+        text.setAttribute('y', ty);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'middle');
+        text.setAttribute('class', 'zodiac-sign');
+        text.setAttribute('font-size', '11');
+        text.textContent = zodiacs[i].symbol;
+        sectorsGroup.appendChild(text);
+      }
+
+      // планеты
+      const planetsGroup = document.getElementById('planets');
+      planets.forEach((planet, idx) => {
+        const [cx, cy] = planet.coords;
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', cx);
+        circle.setAttribute('cy', cy);
+        circle.setAttribute('r', '7');
+        circle.setAttribute('fill', 'url(#planetGrad)');
+        circle.setAttribute('stroke', '#fbeabc');
+        circle.setAttribute('stroke-width', '1.8');
+        circle.setAttribute('class', 'planet-glow');
+        g.appendChild(circle);
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', cx);
+        text.setAttribute('y', cy);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'middle');
+        text.setAttribute('font-size', '11');
+        text.setAttribute('fill', '#ffefc0');
+        text.setAttribute('font-weight', 'bold');
+        text.textContent = planet.symbol;
+        g.appendChild(text);
+        planetsGroup.appendChild(g);
+      });
+
+      // линии аспектов (декор)
+      const linesGroup = document.getElementById('aspect-lines');
+      const points = planets.map(p => p.coords);
+      for (let i = 0; i < points.length; i+=2) {
+        for (let j = i+1; j < points.length; j+=3) {
+          if (Math.random() > 0.4) continue;
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', points[i][0]);
+          line.setAttribute('y1', points[i][1]);
+          line.setAttribute('x2', points[j][0]);
+          line.setAttribute('y2', points[j][1]);
+          line.setAttribute('stroke', '#b39fd9');
+          line.setAttribute('stroke-width', '0.6');
+          line.setAttribute('stroke-dasharray', '3 3');
+          line.setAttribute('opacity', '0.2');
+          linesGroup.appendChild(line);
+        }
+      }
+    }
+
+    // Подсветка сектора знака зодиака
+    function highlightZodiacSector(index) {
+      const sectors = document.querySelectorAll('#zodiac-sectors path');
+      sectors.forEach((path, i) => {
+        if (i === index) {
+          path.setAttribute('fill', `hsla(${(i*30+180)%360}, 70%, 35%, 0.6)`);
+          path.setAttribute('stroke', '#ffd966');
+          path.setAttribute('stroke-width', '1.5');
+        } else {
+          const hue = (i * 30 + 180) % 360;
+          path.setAttribute('fill', `hsla(${hue}, 50%, 25%, 0.25)`);
+          path.setAttribute('stroke', 'none');
+        }
+      });
+    }
+
+    // ---------- Основная логика ----------
+    const calculateBtn = document.getElementById('calculateBtn');
+    const reportContainer = document.getElementById('reportContainer');
+
+    calculateBtn.addEventListener('click', () => {
+      const dateInput = document.getElementById('birthDate').value;
+      const timeInput = document.getElementById('birthTime').value;
+
+      // Показать загрузку
+      reportContainer.innerHTML = '<div class="loading">✨ звёзды собирают ответ ✨</div>';
+      
+      // Имитация работы алгоритма
+      setTimeout(() => {
+        const report = generateReport(dateInput, timeInput);
+        
+        // Подсветить сектор знака зодиака на карте
+        highlightZodiacSector(report.zodiac.index);
+
+        // Отрисовать отчёт
+        let html = '';
+        report.answers.forEach(ans => {
+          html += `<div class="report-item">🌙 ${ans}</div>`;
+        });
+        reportContainer.innerHTML = html;
+
+        // Сообщаем VK о возможном изменении размера
+        if (window.vkBridge) {
+          vkBridge.send('VKWebAppResizeWindow', { width: 100, height: document.documentElement.scrollHeight });
+        }
+      }, 800); // небольшая задержка для эффекта "думает"
+    });
+
+    // Инициализация графики при загрузке
+    window.addEventListener('load', () => {
+      drawChart();
+    });
+  })();
+</script>
+</body>
+</html>
