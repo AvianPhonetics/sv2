@@ -192,6 +192,26 @@
       font-size: 0.9rem;
     }
 
+    /* Оферта */
+    .offer {
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+      margin-bottom: 40px;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+    .offer h2 { text-align: center; margin-bottom: 30px; }
+    .offer h3 { margin-top: 25px; margin-bottom: 10px; }
+    .offer p { margin-bottom: 10px; }
+    .offer .rekviz {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 16px;
+      margin: 20px 0;
+    }
+
     /* Подвал */
     footer {
       text-align: center;
@@ -217,7 +237,7 @@
       <!-- Базовый -->
       <div class="card">
         <h3>Базовая</h3>
-        <div class="price">4 990 ₽</div>
+        <div class="price">4 999 ₽</div>
         <div class="period">единоразово</div>
         <ul>
           <li>Готовый датасет (200 диалогов)</li>
@@ -226,7 +246,7 @@
           <li>Лицензия для коммерческого использования</li>
         </ul>
         <!-- Ссылка на оплату: замените YOUR_LOGIN и SignatureValue на свои -->
-        <a href="https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=YOUR_LOGIN&OutSum=4990&Description=BasicDataset&SignatureValue=PLACEHOLDER_SIG" class="btn">Купить</a>
+        <a href="https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=YOUR_LOGIN&OutSum=4999&Description=BasicDataset&SignatureValue=PLACEHOLDER_SIG_BASIC" class="btn">Купить</a>
       </div>
 
       <!-- Расширенный (популярный) -->
@@ -237,17 +257,17 @@
         <ul>
           <li>Всё из базовой версии</li>
           <li>Генератор неограниченного числа диалогов (Python + HTML)</li>
-          <li>Возможность настройки тем, тональности, срочности</li>
+          <li>Настройка тем, тональности, срочности</li>
           <li>Экспорт в JSONL/CSV в один клик</li>
           <li>Примеры кода для обучения</li>
         </ul>
-        <a href="https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=YOUR_LOGIN&OutSum=9990&Description=ExtendedDataset&SignatureValue=PLACEHOLDER_SIG2" class="btn">Купить</a>
+        <a href="https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=YOUR_LOGIN&OutSum=9990&Description=ExtendedDataset&SignatureValue=PLACEHOLDER_SIG_EXT" class="btn">Купить</a>
       </div>
 
       <!-- Enterprise -->
       <div class="card">
         <h3>Enterprise</h3>
-        <div class="price">99 900 ₽</div>
+        <div class="price">49 900 ₽</div>
         <div class="period">по запросу</div>
         <ul>
           <li>Эксклюзивная лицензия</li>
@@ -275,7 +295,7 @@
           <span style="font-size:1.8rem;">🔒</span> SSL-шифрование
         </div>
         <div class="trust-item">
-          <span style="font-size:1.8rem;">📄</span> Самозанятый (чеки)
+          <span style="font-size:1.8rem;">📄</span> Оферта на сайте
         </div>
         <div class="trust-item">
           <span style="font-size:1.8rem;">⚡</span> Мгновенная доставка
@@ -283,8 +303,40 @@
       </div>
     </div>
 
+    <!-- Публичная оферта -->
+    <div class="offer" id="offer">
+      <h2>Публичная оферта</h2>
+      <p><strong>ИП Садомова Юлия Сергеевна</strong>, действующая на основании ОГРНИП 326580000029381, ИНН 731102904301, именуемая в дальнейшем «Продавец», настоящей публичной офертой предлагает любому физическому или юридическому лицу (далее – «Покупатель») приобрести цифровой товар «Синтетические диалоги поддержки (датасет)» на условиях, изложенных ниже.</p>
+
+      <h3>1. Предмет оферты</h3>
+      <p>1.1. Продавец обязуется передать Покупателю цифровой товар — набор данных (датасет) в виде файлов JSONL/CSV, а также дополнительные материалы согласно выбранному тарифу.<br>
+      1.2. Актуальные тарифы и состав услуг опубликованы на данной странице.</p>
+
+      <h3>2. Порядок оплаты</h3>
+      <p>2.1. Покупатель оплачивает выбранный тариф с помощью сервиса Robokassa (банковские карты, СБП, Apple Pay, Google Pay).<br>
+      2.2. После успешного списания средств Покупатель получает ссылку на скачивание товара на указанный при оплате email.<br>
+      2.3. В случае технического сбоя доставка осуществляется в течение 24 часов с момента обращения в службу поддержки.</p>
+
+      <h3>3. Возврат и обмен</h3>
+      <p>3.1. В связи с цифровой природой товара возврат средств после скачивания не производится, за исключением случаев, когда товар не соответствует описанию или не может быть загружен по вине Продавца.<br>
+      3.2. Претензии принимаются в течение 7 дней с момента оплаты. При обнаружении недостатков Покупатель вправе потребовать замену или возврат денежных средств.</p>
+
+      <h3>4. Лицензия</h3>
+      <p>4.1. Приобретаемый датасет предоставляется на условиях лицензии CDLA-Permissive 2.0, позволяющей коммерческое использование, модификацию и распространение с указанием авторства.</p>
+
+      <h3>5. Реквизиты Продавца</h3>
+      <div class="rekviz">
+        <strong>ИП Садомова Юлия Сергеевна</strong><br>
+        ОГРНИП: 326580000029381<br>
+        ИНН: 731102904301<br>
+        Email: your@email.ru (укажите ваш рабочий email)
+      </div>
+
+      <p>Оплата означает полное и безоговорочное согласие с условиями настоящей оферты.</p>
+    </div>
+
     <footer>
-      © 2026 Synthetic Data Lab | <a href="#">Лицензия CDLA-Permissive 2.0</a>
+      © 2026 Synthetic Data Lab | <a href="#offer">Публичная оферта</a> | Лицензия CDLA-Permissive 2.0
     </footer>
   </div>
 </body>
