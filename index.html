@@ -2,986 +2,290 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Демо · Запись в клинику (MAX)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Синтетические диалоги поддержки – Купить датасет</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
-      background: #ffffff;
-      color: #222222;
-      padding: 16px 12px 24px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f0 100%);
+      color: #1e293b;
+      line-height: 1.6;
     }
+    .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
 
-    /* Переменные в стиле MAX */
-    :root {
-      --primary: #2A7AFF;
-      --primary-light: #E9F0FF;
-      --border: #E5E7EB;
-      --bg-secondary: #F3F4F6;
-      --text-secondary: #6B7280;
-      --success: #10B981;
-      --error: #EF4444;
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
     }
-
-    /* Эмуляция тёмной темы (опционально) */
-    body.dark {
-      background: #1E1E1E;
-      color: #E4E4E4;
-    }
-    body.dark {
-      --primary: #3B82F6;
-      --primary-light: #1E3A5F;
-      --border: #374151;
-      --bg-secondary: #1F2937;
-      --text-secondary: #9CA3AF;
-    }
-
-    h1 {
-      font-size: 24px;
+    .hero h1 {
+      font-size: 3rem;
       font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .hero .highlight { color: #4f46e5; }
+    .hero p {
+      font-size: 1.25rem;
+      color: #475569;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      font-weight: 400;
+    }
+    .badge {
+      display: inline-block;
+      background: #4f46e5;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
       margin-bottom: 20px;
     }
 
-    h2 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 12px;
+    /* Тарифы */
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
     }
-
-    .step-indicator {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
-
-    .step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      flex: 1;
-      position: relative;
-    }
-
-    .step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      top: 12px;
-      right: -50%;
-      width: 100%;
-      height: 2px;
-      background: var(--border);
-      z-index: 0;
-    }
-
-    .step.active .step-circle {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: white;
-    }
-
-    .step.completed .step-circle {
-      background: var(--primary);
-      border-color: var(--primary);
-    }
-
-    .step.completed .step-circle::after {
-      content: '✓';
-      color: white;
-      font-size: 14px;
-      line-height: 1;
-    }
-
-    .step-circle {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--bg-secondary);
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--text-secondary);
-      z-index: 1;
-      transition: all 0.2s;
-    }
-
-    .step-label {
-      font-size: 12px;
-      margin-top: 6px;
-      color: var(--text-secondary);
-    }
-
-    .step.active .step-label {
-      color: var(--primary);
-      font-weight: 500;
-    }
-
     .card {
-      background: var(--bg-secondary);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-      border: 1px solid var(--border);
-    }
-
-    .selection-grid {
+      background: white;
+      border-radius: 24px;
+      padding: 40px 30px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.04);
       display: flex;
       flex-direction: column;
-      gap: 8px;
     }
-
-    .select-item {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      transition: all 0.15s;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(79, 70, 229, 0.1);
     }
-    body.dark .select-item {
-      background: #2C2C2C;
-    }
-
-    .select-item:active {
-      background: var(--primary-light);
-      border-color: var(--primary);
-    }
-
-    .select-item.selected {
-      background: var(--primary-light);
-      border-color: var(--primary);
-    }
-
-    .select-item-emoji {
-      font-size: 24px;
-    }
-
-    .select-item-content {
-      flex: 1;
-    }
-
-    .select-item-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .select-item-subtitle {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .radio-indicator {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
+    .card.popular {
+      border: 2px solid #4f46e5;
       position: relative;
     }
-
-    .selected .radio-indicator {
-      border-color: var(--primary);
-    }
-
-    .selected .radio-indicator::after {
-      content: '';
+    .card.popular::before {
+      content: "ПОПУЛЯРНЫЙ";
       position: absolute;
-      width: 10px;
-      height: 10px;
-      background: var(--primary);
-      border-radius: 50%;
-      top: 50%;
+      top: -12px;
       left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    /* Календарь */
-    .calendar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .month-year {
-      font-weight: 600;
-      font-size: 16px;
-    }
-
-    .nav-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: white;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      color: var(--primary);
-    }
-    body.dark .nav-btn {
-      background: #2C2C2C;
-    }
-
-    .weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
-    .calendar-days {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-    }
-
-    .day-cell {
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      border-radius: 50%;
-      cursor: pointer;
-      background: white;
-    }
-    body.dark .day-cell {
-      background: #2C2C2C;
-    }
-
-    .day-cell.empty {
-      cursor: default;
-    }
-
-    .day-cell.selected {
-      background: var(--primary);
+      transform: translateX(-50%);
+      background: #4f46e5;
       color: white;
-    }
-
-    .day-cell.disabled {
-      color: var(--text-secondary);
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* Слоты времени */
-    .time-slots {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .time-slot {
-      background: white;
-      border: 1px solid var(--border);
+      padding: 4px 18px;
       border-radius: 12px;
-      padding: 12px 8px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.1s;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
     }
-    body.dark .time-slot {
-      background: #2C2C2C;
+    .card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #1e293b;
     }
-
-    .time-slot:active {
-      background: var(--primary-light);
-      border-color: var(--primary);
+    .card .price {
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: #4f46e5;
+      margin: 20px 0 10px;
     }
-
-    .time-slot.selected {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
+    .card .period {
+      font-size: 1rem;
+      color: #64748b;
+      margin-bottom: 25px;
     }
-
-    .time-slot.unavailable {
-      background: var(--bg-secondary);
-      color: var(--text-secondary);
-      text-decoration: line-through;
-      cursor: not-allowed;
-      opacity: 0.6;
+    .card ul {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 30px;
+      flex-grow: 1;
     }
-
-    /* Форма контактов */
-    .form-group {
-      margin-bottom: 20px;
+    .card ul li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.95rem;
+      color: #334155;
+      display: flex;
+      align-items: center;
     }
-
-    .form-label {
+    .card ul li::before {
+      content: "✓";
+      color: #4f46e5;
+      font-weight: bold;
+      margin-right: 10px;
+      font-size: 1.1rem;
+    }
+    .btn {
       display: block;
-      margin-bottom: 6px;
-      font-weight: 500;
-      font-size: 14px;
-    }
-
-    .form-input {
       width: 100%;
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 16px;
-      background: white;
-      color: #222;
-      outline: none;
-      transition: border 0.2s;
-    }
-    body.dark .form-input {
-      background: #2C2C2C;
-      color: #E4E4E4;
-    }
-
-    .form-input:focus {
-      border-color: var(--primary);
-    }
-
-    .error-message {
-      color: var(--error);
-      font-size: 13px;
-      margin-top: 4px;
-      display: none;
-    }
-
-    .summary-block {
-      background: var(--primary-light);
-      border-radius: 12px;
       padding: 16px;
+      background: #4f46e5;
+      color: white;
+      text-decoration: none;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+    }
+    .btn:hover { background: #4338ca; }
+    .btn.outline {
+      background: transparent;
+      border: 2px solid #4f46e5;
+      color: #4f46e5;
+    }
+    .btn.outline:hover {
+      background: #f8fafc;
+    }
+
+    /* Блок доверия */
+    .trust {
+      text-align: center;
+      margin: 60px 0 40px;
+      padding: 30px;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+    }
+    .trust h2 {
+      font-size: 1.8rem;
       margin-bottom: 20px;
     }
-
-    .summary-row {
+    .trust-grid {
       display: flex;
-      margin-bottom: 8px;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
-
-    .summary-label {
-      width: 100px;
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
-
-    .summary-value {
-      flex: 1;
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       font-weight: 500;
     }
-
-    /* Кнопки */
-    .button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 16px;
-      font-size: 16px;
-      font-weight: 600;
-      width: 100%;
-      cursor: pointer;
-      transition: opacity 0.2s;
-      margin-top: 8px;
-    }
-
-    .button:active {
+    .trust-item img {
+      width: 40px;
       opacity: 0.8;
     }
-
-    .button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .button-secondary {
-      background: transparent;
-      color: var(--primary);
-      border: 1px solid var(--primary);
-    }
-
-    .navigation-buttons {
+    .payment-methods {
       display: flex;
-      gap: 12px;
-      margin-top: auto;
-      padding-top: 20px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* Загрузка и успех */
-    .loading {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 40px;
+      gap: 15px;
+      margin: 30px 0;
+    }
+    .payment-methods span {
+      background: #f1f5f9;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
     }
 
-    .success-icon {
-      font-size: 64px;
-      margin-bottom: 20px;
-    }
-
-    /* Демо-панель */
-    .demo-panel {
-      margin-top: 20px;
-      padding: 12px;
-      background: var(--bg-secondary);
-      border-radius: 12px;
-      font-size: 13px;
-      color: var(--text-secondary);
+    /* Подвал */
+    footer {
       text-align: center;
-      border: 1px dashed var(--border);
+      color: #94a3b8;
+      margin-top: 50px;
+      font-size: 0.85rem;
     }
-
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      background: #1E293B;
-      color: white;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-size: 14px;
-      text-align: center;
-      z-index: 1000;
-      animation: fadeInUp 0.3s;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    footer a { color: #4f46e5; text-decoration: none; }
   </style>
 </head>
 <body>
-  <div id="app"></div>
+  <div class="container">
 
-  <!-- Демо-панель с переключателем темы -->
-  <div class="demo-panel">
-    <span style="margin-right: 16px;">👁️ Демо-режим</span>
-    <button id="toggleThemeBtn" style="background: none; border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px; cursor: pointer; color: inherit;">🌓 Тёмная тема</button>
+    <!-- Hero -->
+    <div class="hero">
+      <div class="badge">ГОТОВЫЙ NLP-ДАТАСЕТ</div>
+      <h1>Синтетические <span class="highlight">диалоги поддержки</span> на русском</h1>
+      <p>200+ размеченных диалогов для обучения чат-ботов и классификаторов обращений. Строго по 152-ФЗ, без персональных данных. Идеально для ритейла, банков, телекома.</p>
+    </div>
+
+    <!-- Тарифы -->
+    <div class="pricing">
+      <!-- Базовый -->
+      <div class="card">
+        <h3>Базовая</h3>
+        <div class="price">1 990 ₽</div>
+        <div class="period">единоразово</div>
+        <ul>
+          <li>Готовый датасет (200 диалогов)</li>
+          <li>Форматы JSONL + CSV</li>
+          <li>Datasheet с описанием</li>
+          <li>Лицензия для коммерческого использования</li>
+        </ul>
+        <!-- Ссылка на оплату: замените YOUR_LOGIN и SignatureValue на свои -->
+        <a href="https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=YOUR_LOGIN&OutSum=1990&Description=BasicDataset&SignatureValue=PLACEHOLDER_SIG" class="btn">Купить</a>
+      </div>
+
+      <!-- Расширенный (популярный) -->
+      <div class="card popular">
+        <h3>Расширенная ⭐</h3>
+        <div class="price">4 990 ₽</div>
+        <div class="period">единоразово</div>
+        <ul>
+          <li>Всё из базовой версии</li>
+          <li>Генератор неограниченного числа диалогов (Python + HTML)</li>
+          <li>Возможность настройки тем, тональности, срочности</li>
+          <li>Экспорт в JSONL/CSV в один клик</li>
+          <li>Примеры кода для обучения</li>
+        </ul>
+        <a href="https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=YOUR_LOGIN&OutSum=4990&Description=ExtendedDataset&SignatureValue=PLACEHOLDER_SIG2" class="btn">Купить</a>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="card">
+        <h3>Enterprise</h3>
+        <div class="price">29 900 ₽</div>
+        <div class="period">по запросу</div>
+        <ul>
+          <li>Эксклюзивная лицензия</li>
+          <li>Кастомизация под ваш бизнес</li>
+          <li>Приоритетная поддержка</li>
+          <li>Интеграция в ваши пайплайны</li>
+        </ul>
+        <a href="mailto:your@email.ru" class="btn outline">Связаться</a>
+      </div>
+    </div>
+
+    <!-- Доверие и оплата -->
+    <div class="trust">
+      <h2>🔒 Безопасная оплата</h2>
+      <div class="payment-methods">
+        <span>💳 Банковские карты</span>
+        <span>🏦 СБП</span>
+        <span>📱 Apple / Google Pay</span>
+      </div>
+      <p style="margin-top:15px; color:#475569;">
+        Мгновенная доставка на email после оплаты. Платёж обрабатывает <strong>Robokassa</strong>.
+      </p>
+      <div class="trust-grid" style="margin-top:30px;">
+        <div class="trust-item">
+          <span style="font-size:1.8rem;">🔒</span> SSL-шифрование
+        </div>
+        <div class="trust-item">
+          <span style="font-size:1.8rem;">📄</span> Самозанятый (чеки)
+        </div>
+        <div class="trust-item">
+          <span style="font-size:1.8rem;">⚡</span> Мгновенная доставка
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      © 2025 Synthetic Data Lab | <a href="#">Лицензия CDLA-Permissive 2.0</a>
+    </footer>
   </div>
-
-  <script>
-    (function() {
-      // Эмуляция окружения MAX WebApp
-      const mockWebApp = {
-        ready: () => {},
-        expand: () => {},
-        close: () => { showToast('В реальном MAX приложение бы закрылось'); },
-        setHeaderColor: () => {},
-        setBackgroundColor: () => {},
-        sendData: (data) => {
-          showToast(`📤 Данные отправлены боту: ${data}`);
-          console.log('WebApp.sendData:', data);
-        },
-        onEvent: (event, callback) => {
-          if (event === 'backButtonClicked') {
-            // не используется в демо
-          }
-        },
-        BackButton: {
-          show: () => {},
-          hide: () => {}
-        },
-        initDataUnsafe: {
-          user: { first_name: 'Гость', id: 12345 }
-        },
-        colorScheme: 'light'
-      };
-
-      // Используем реальный объект, если запущено внутри MAX, иначе мок
-      const webApp = window.Telegram?.WebApp || window.MAX?.WebApp || mockWebApp;
-      
-      // Настройка темы (если запущено не в MAX, эмулируем светлую)
-      if (!window.Telegram?.WebApp && !window.MAX?.WebApp) {
-        // Просто эмуляция
-      }
-      
-      // Адаптация тёмной темы (переключатель)
-      const toggleThemeBtn = document.getElementById('toggleThemeBtn');
-      toggleThemeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark');
-        toggleThemeBtn.textContent = document.body.classList.contains('dark') ? '☀️ Светлая тема' : '🌓 Тёмная тема';
-      });
-
-      // Функция показа уведомления
-      function showToast(message) {
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-      }
-
-      // -------------------- Моковые данные --------------------
-      const departments = [
-        { id: 'therapy', name: 'Терапия', emoji: '🩺', description: 'Прием терапевта, диагностика' },
-        { id: 'cardio', name: 'Кардиология', emoji: '❤️', description: 'Обследование сердца, ЭКГ' },
-        { id: 'derm', name: 'Дерматология', emoji: '🔬', description: 'Лечение кожных заболеваний' },
-        { id: 'neuro', name: 'Неврология', emoji: '🧠', description: 'Диагностика нервной системы' }
-      ];
-      
-      const doctors = {
-        therapy: [
-          { id: 't1', name: 'Иванова Анна Сергеевна', specialty: 'Терапевт', experience: '12 лет', emoji: '👩‍⚕️' },
-          { id: 't2', name: 'Петров Михаил Иванович', specialty: 'Терапевт', experience: '8 лет', emoji: '👨‍⚕️' }
-        ],
-        cardio: [
-          { id: 'c1', name: 'Смирнова Елена Викторовна', specialty: 'Кардиолог', experience: '15 лет', emoji: '👩‍⚕️' },
-          { id: 'c2', name: 'Козлов Дмитрий Андреевич', specialty: 'Кардиолог', experience: '10 лет', emoji: '👨‍⚕️' }
-        ],
-        derm: [
-          { id: 'd1', name: 'Волкова Ольга Николаевна', specialty: 'Дерматолог', experience: '9 лет', emoji: '👩‍⚕️' }
-        ],
-        neuro: [
-          { id: 'n1', name: 'Соколов Артем Павлович', specialty: 'Невролог', experience: '14 лет', emoji: '👨‍⚕️' },
-          { id: 'n2', name: 'Белова Татьяна Игоревна', specialty: 'Невролог', experience: '7 лет', emoji: '👩‍⚕️' }
-        ]
-      };
-      
-      // Генерация слотов (на 7 дней вперёд)
-      const generateTimeSlots = () => {
-        const slots = {};
-        const today = new Date();
-        for (const dept in doctors) {
-          doctors[dept].forEach(doc => {
-            slots[doc.id] = {};
-            for (let i = 0; i < 7; i++) {
-              const date = new Date(today);
-              date.setDate(today.getDate() + i);
-              const dateStr = date.toISOString().split('T')[0];
-              const dayOfWeek = date.getDay();
-              const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-              
-              const allSlots = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
-              const availableSlots = allSlots.filter(() => Math.random() > 0.3);
-              
-              slots[doc.id][dateStr] = isWeekend 
-                ? availableSlots.slice(0, Math.floor(availableSlots.length / 2))
-                : availableSlots;
-            }
-          });
-        }
-        return slots;
-      };
-      
-      const timeSlotsData = generateTimeSlots();
-      
-      // -------------------- Состояние --------------------
-      const state = {
-        step: 1,
-        selectedDepartment: null,
-        selectedDoctor: null,
-        selectedDate: null,
-        selectedTime: null,
-        contactName: webApp.initDataUnsafe?.user?.first_name || '',
-        contactPhone: '',
-        errors: {}
-      };
-      
-      // Вспомогательные функции
-      function formatDate(dateStr) {
-        if (!dateStr) return '';
-        const [year, month, day] = dateStr.split('-');
-        const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-        return `${parseInt(day)} ${months[parseInt(month)-1]} ${year}`;
-      }
-      
-      function getDayName(dateStr) {
-        const date = new Date(dateStr);
-        const days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
-        return days[date.getDay()];
-      }
-      
-      // Рендеринг
-      function render() {
-        const app = document.getElementById('app');
-        
-        let html = `
-          <h1>Запись на приём</h1>
-          <div class="step-indicator">
-            <div class="step ${state.step >= 1 ? 'active' : ''} ${state.step > 1 ? 'completed' : ''}">
-              <div class="step-circle">1</div>
-              <span class="step-label">Отделение</span>
-            </div>
-            <div class="step ${state.step >= 2 ? 'active' : ''} ${state.step > 2 ? 'completed' : ''}">
-              <div class="step-circle">2</div>
-              <span class="step-label">Врач</span>
-            </div>
-            <div class="step ${state.step >= 3 ? 'active' : ''} ${state.step > 3 ? 'completed' : ''}">
-              <div class="step-circle">3</div>
-              <span class="step-label">Дата</span>
-            </div>
-            <div class="step ${state.step >= 4 ? 'active' : ''} ${state.step > 4 ? 'completed' : ''}">
-              <div class="step-circle">4</div>
-              <span class="step-label">Время</span>
-            </div>
-            <div class="step ${state.step >= 5 ? 'active' : ''}">
-              <div class="step-circle">5</div>
-              <span class="step-label">Контакты</span>
-            </div>
-          </div>
-        `;
-        
-        if (state.step === 1) html += renderDepartmentStep();
-        else if (state.step === 2) html += renderDoctorStep();
-        else if (state.step === 3) html += renderDateStep();
-        else if (state.step === 4) html += renderTimeStep();
-        else if (state.step === 5) html += renderContactStep();
-        else if (state.step === 6) html += renderConfirmationStep();
-        
-        app.innerHTML = html;
-        attachEvents();
-      }
-      
-      function renderDepartmentStep() {
-        let html = `<div class="card"><h2>Выберите отделение</h2><div class="selection-grid">`;
-        departments.forEach(dept => {
-          const selected = state.selectedDepartment === dept.id ? 'selected' : '';
-          html += `
-            <div class="select-item ${selected}" data-department="${dept.id}">
-              <span class="select-item-emoji">${dept.emoji}</span>
-              <div class="select-item-content">
-                <div class="select-item-title">${dept.name}</div>
-                <div class="select-item-subtitle">${dept.description}</div>
-              </div>
-              <div class="radio-indicator"></div>
-            </div>
-          `;
-        });
-        html += `</div></div>`;
-        html += `<button class="button" id="nextBtn" ${!state.selectedDepartment ? 'disabled' : ''}>Продолжить</button>`;
-        return html;
-      }
-      
-      function renderDoctorStep() {
-        const deptId = state.selectedDepartment;
-        const deptName = departments.find(d => d.id === deptId).name;
-        const docList = doctors[deptId] || [];
-        
-        let html = `<div class="card"><h2>${deptName} · Врачи</h2><div class="selection-grid">`;
-        docList.forEach(doc => {
-          const selected = state.selectedDoctor === doc.id ? 'selected' : '';
-          html += `
-            <div class="select-item ${selected}" data-doctor="${doc.id}">
-              <span class="select-item-emoji">${doc.emoji}</span>
-              <div class="select-item-content">
-                <div class="select-item-title">${doc.name}</div>
-                <div class="select-item-subtitle">${doc.specialty} · Стаж ${doc.experience}</div>
-              </div>
-              <div class="radio-indicator"></div>
-            </div>
-          `;
-        });
-        html += `</div></div>`;
-        html += `
-          <div class="navigation-buttons">
-            <button class="button button-secondary" id="backBtn">Назад</button>
-            <button class="button" id="nextBtn" ${!state.selectedDoctor ? 'disabled' : ''}>Продолжить</button>
-          </div>
-        `;
-        return html;
-      }
-      
-      function renderDateStep() {
-        const today = new Date();
-        const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-        const year = currentMonth.getFullYear();
-        const month = currentMonth.getMonth();
-        const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-        
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        
-        let calendarDays = '';
-        for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
-          calendarDays += `<div class="day-cell empty"></div>`;
-        }
-        
-        for (let day = 1; day <= daysInMonth; day++) {
-          const date = new Date(year, month, day);
-          const dateStr = date.toISOString().split('T')[0];
-          const todayStr = new Date().toISOString().split('T')[0];
-          const isPast = dateStr < todayStr;
-          
-          const hasSlots = state.selectedDoctor && 
-            timeSlotsData[state.selectedDoctor] && 
-            timeSlotsData[state.selectedDoctor][dateStr] && 
-            timeSlotsData[state.selectedDoctor][dateStr].length > 0;
-          
-          const isSelected = state.selectedDate === dateStr;
-          const disabledClass = (isPast || !hasSlots) ? 'disabled' : '';
-          
-          calendarDays += `<div class="day-cell ${disabledClass} ${isSelected ? 'selected' : ''}" data-date="${dateStr}">${day}</div>`;
-        }
-        
-        let html = `
-          <div class="card">
-            <div class="calendar-header">
-              <button class="nav-btn" disabled>←</button>
-              <span class="month-year">${monthNames[month]} ${year}</span>
-              <button class="nav-btn" disabled>→</button>
-            </div>
-            <div class="weekdays"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
-            <div class="calendar-days">${calendarDays}</div>
-            <p style="margin-top: 12px; font-size: 14px; color: var(--text-secondary);">
-              ${state.selectedDate ? `Выбрано: ${formatDate(state.selectedDate)} (${getDayName(state.selectedDate)})` : 'Выберите доступную дату'}
-            </p>
-          </div>
-          <div class="navigation-buttons">
-            <button class="button button-secondary" id="backBtn">Назад</button>
-            <button class="button" id="nextBtn" ${!state.selectedDate ? 'disabled' : ''}>Продолжить</button>
-          </div>
-        `;
-        return html;
-      }
-      
-      function renderTimeStep() {
-        const doctor = doctors[state.selectedDepartment].find(d => d.id === state.selectedDoctor);
-        const slots = state.selectedDate && state.selectedDoctor 
-          ? timeSlotsData[state.selectedDoctor][state.selectedDate] || []
-          : [];
-        
-        let slotsHtml = '';
-        if (slots.length === 0) {
-          slotsHtml = '<p style="grid-column: span 3; text-align: center; padding: 20px;">Нет доступных слотов</p>';
-        } else {
-          slots.forEach(time => {
-            const selected = state.selectedTime === time ? 'selected' : '';
-            slotsHtml += `<div class="time-slot ${selected}" data-time="${time}">${time}</div>`;
-          });
-        }
-        
-        let html = `
-          <div class="card">
-            <h2>${doctor.name}</h2>
-            <p style="margin-bottom: 16px; color: var(--text-secondary);">${formatDate(state.selectedDate)} (${getDayName(state.selectedDate)})</p>
-            <h3 style="margin-bottom: 12px;">Доступное время</h3>
-            <div class="time-slots">${slotsHtml}</div>
-          </div>
-          <div class="navigation-buttons">
-            <button class="button button-secondary" id="backBtn">Назад</button>
-            <button class="button" id="nextBtn" ${!state.selectedTime ? 'disabled' : ''}>Продолжить</button>
-          </div>
-        `;
-        return html;
-      }
-      
-      function renderContactStep() {
-        const errorName = state.errors.name || '';
-        const errorPhone = state.errors.phone || '';
-        
-        return `
-          <div class="card">
-            <h2>Контактные данные</h2>
-            <div class="form-group">
-              <label class="form-label">Ваше имя</label>
-              <input type="text" class="form-input" id="nameInput" value="${state.contactName}" placeholder="Иван Иванов">
-              <div class="error-message" id="nameError" ${errorName ? 'style="display:block;"' : ''}>${errorName}</div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Номер телефона</label>
-              <input type="tel" class="form-input" id="phoneInput" value="${state.contactPhone}" placeholder="+7 (999) 123-45-67">
-              <div class="error-message" id="phoneError" ${errorPhone ? 'style="display:block;"' : ''}>${errorPhone}</div>
-            </div>
-          </div>
-          <div class="navigation-buttons">
-            <button class="button button-secondary" id="backBtn">Назад</button>
-            <button class="button" id="nextBtn">Продолжить</button>
-          </div>
-        `;
-      }
-      
-      function renderConfirmationStep() {
-        const dept = departments.find(d => d.id === state.selectedDepartment);
-        const doctor = doctors[state.selectedDepartment].find(d => d.id === state.selectedDoctor);
-        
-        return `
-          <div class="card">
-            <h2>Проверьте данные</h2>
-            <div class="summary-block">
-              <div class="summary-row"><span class="summary-label">Отделение</span><span class="summary-value">${dept.name}</span></div>
-              <div class="summary-row"><span class="summary-label">Врач</span><span class="summary-value">${doctor.name}</span></div>
-              <div class="summary-row"><span class="summary-label">Дата</span><span class="summary-value">${formatDate(state.selectedDate)}</span></div>
-              <div class="summary-row"><span class="summary-label">Время</span><span class="summary-value">${state.selectedTime}</span></div>
-              <div class="summary-row"><span class="summary-label">Имя</span><span class="summary-value">${state.contactName}</span></div>
-              <div class="summary-row"><span class="summary-label">Телефон</span><span class="summary-value">${state.contactPhone}</span></div>
-            </div>
-            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">
-              Нажимая «Подтвердить запись», вы соглашаетесь с правилами.
-            </p>
-          </div>
-          <div class="navigation-buttons">
-            <button class="button button-secondary" id="backBtn">Назад</button>
-            <button class="button" id="confirmBtn">Подтвердить запись</button>
-          </div>
-        `;
-      }
-      
-      function renderSuccess() {
-        return `
-          <div class="loading">
-            <div class="success-icon">✅</div>
-            <h2>Запись подтверждена!</h2>
-            <p style="margin: 16px 0; text-align: center;">${formatDate(state.selectedDate)} в ${state.selectedTime}<br>${state.contactName}</p>
-            <p style="color: var(--text-secondary); margin-bottom: 24px;">Детали отправлены на телефон.</p>
-            <button class="button" id="closeBtn">Закрыть</button>
-          </div>
-        `;
-      }
-      
-      function attachEvents() {
-        document.getElementById('nextBtn')?.addEventListener('click', goToNextStep);
-        document.getElementById('backBtn')?.addEventListener('click', goToPrevStep);
-        document.getElementById('confirmBtn')?.addEventListener('click', confirmAppointment);
-        document.getElementById('closeBtn')?.addEventListener('click', () => {
-          showToast('👋 Демо завершено. Обновите страницу, чтобы начать заново.');
-          document.getElementById('app').innerHTML = '<div style="text-align:center; padding:40px;">Спасибо за тестирование!<br><button class="button" style="margin-top:20px;" onclick="location.reload()">Начать заново</button></div>';
-        });
-        
-        document.querySelectorAll('[data-department]').forEach(el => {
-          el.addEventListener('click', () => {
-            state.selectedDepartment = el.dataset.department;
-            state.selectedDoctor = null;
-            state.selectedDate = null;
-            state.selectedTime = null;
-            render();
-          });
-        });
-        
-        document.querySelectorAll('[data-doctor]').forEach(el => {
-          el.addEventListener('click', () => {
-            state.selectedDoctor = el.dataset.doctor;
-            state.selectedDate = null;
-            state.selectedTime = null;
-            render();
-          });
-        });
-        
-        document.querySelectorAll('[data-date]').forEach(el => {
-          el.addEventListener('click', () => {
-            if (el.classList.contains('disabled')) return;
-            state.selectedDate = el.dataset.date;
-            state.selectedTime = null;
-            render();
-          });
-        });
-        
-        document.querySelectorAll('[data-time]').forEach(el => {
-          el.addEventListener('click', () => {
-            state.selectedTime = el.dataset.time;
-            render();
-          });
-        });
-        
-        const nameInput = document.getElementById('nameInput');
-        const phoneInput = document.getElementById('phoneInput');
-        if (nameInput) {
-          nameInput.addEventListener('input', (e) => {
-            state.contactName = e.target.value;
-            validateContactForm();
-          });
-        }
-        if (phoneInput) {
-          phoneInput.addEventListener('input', (e) => {
-            state.contactPhone = e.target.value;
-            validateContactForm();
-          });
-        }
-      }
-      
-      function validateContactForm() {
-        state.errors = {};
-        if (!state.contactName.trim()) state.errors.name = 'Введите имя';
-        const cleaned = state.contactPhone.replace(/\D/g, '');
-        if (cleaned.length < 10) state.errors.phone = 'Минимум 10 цифр';
-        
-        const nameError = document.getElementById('nameError');
-        const phoneError = document.getElementById('phoneError');
-        if (nameError) nameError.style.display = state.errors.name ? 'block' : 'none';
-        if (phoneError) phoneError.style.display = state.errors.phone ? 'block' : 'none';
-        
-        const nextBtn = document.getElementById('nextBtn');
-        if (nextBtn) nextBtn.disabled = Object.keys(state.errors).length > 0;
-      }
-      
-      function goToNextStep() {
-        if (state.step === 5) {
-          validateContactForm();
-          if (Object.keys(state.errors).length > 0) {
-            render();
-            return;
-          }
-        }
-        if (state.step < 6) {
-          state.step++;
-          render();
-          window.scrollTo(0, 0);
-        }
-      }
-      
-      function goToPrevStep() {
-        if (state.step > 1) {
-          state.step--;
-          render();
-          window.scrollTo(0, 0);
-        }
-      }
-      
-      function confirmAppointment() {
-        const dept = departments.find(d => d.id === state.selectedDepartment);
-        const doctor = doctors[state.selectedDepartment].find(d => d.id === state.selectedDoctor);
-        
-        const appointmentData = {
-          action: 'appointment',
-          department: dept.name,
-          doctor: doctor.name,
-          date: state.selectedDate,
-          time: state.selectedTime,
-          name: state.contactName,
-          phone: state.contactPhone,
-          userId: webApp.initDataUnsafe?.user?.id || 'demo',
-          timestamp: new Date().toISOString()
-        };
-        
-        webApp.sendData(JSON.stringify(appointmentData));
-        
-        // Показываем экран успеха
-        document.getElementById('app').innerHTML = renderSuccess();
-        document.getElementById('closeBtn')?.addEventListener('click', () => {
-          document.getElementById('app').innerHTML = '<div style="text-align:center; padding:40px;">Спасибо за тестирование!<br><button class="button" style="margin-top:20px;" onclick="location.reload()">Начать заново</button></div>';
-        });
-      }
-      
-      // Запуск
-      render();
-    })();
-  </script>
 </body>
 </html>
